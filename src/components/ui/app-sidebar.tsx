@@ -1,4 +1,4 @@
-import { ChartArea, Tractor } from "lucide-react";
+import { ChartArea, Tractor, Grid3X3 } from "lucide-react";
 
 import {
   Sidebar,
@@ -21,6 +21,11 @@ const items = [
     title: "Farm Conditions",
     url: "/farm-conditions",
     icon: Tractor,
+  },
+  {
+    title: "Field Map",
+    url: "/field-map",
+    icon: Grid3X3,
   },
 ];
 
