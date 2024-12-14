@@ -7,14 +7,13 @@ const Detections = createSelectSchema(detections);
 
 const InsertDetections = createInsertSchema(detections)
   .pick({
-    scan_id: true,
     label: true,
     confidence: true,
     count: true,
     percentage: true,
   })
   .extend({
-    created_by: z.string().default(() => "system"),
+    scan_id: z.string().default(() => ""),
   });
 
 type Detections = InferSelectModel<typeof detections>;
