@@ -9,10 +9,13 @@ export default function RootLayout({
   return (
     <SidebarProvider>
       <AppSidebar />
-      <>
-        <SidebarTrigger />
-        {children}
-      </>
+      <div className="w-full">
+        <div className="w-full p-6 border-b flex items-center gap-2">
+          <SidebarTrigger />
+          <h2 className="plabs-headline-semibold-24">SakuraCrop Defender</h2>
+        </div>
+        <div className="p-6">{children}</div>
+      </div>
     </SidebarProvider>
   );
 }

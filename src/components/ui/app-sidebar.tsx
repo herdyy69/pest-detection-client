@@ -1,4 +1,4 @@
-import { Calendar, Home, Inbox, Search, Settings } from "lucide-react";
+import { ChartArea, Tractor } from "lucide-react";
 
 import {
   Sidebar,
@@ -11,45 +11,34 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
 
-// Menu items.
 const items = [
   {
-    title: "Home",
-    url: "#",
-    icon: Home,
+    title: "Statistics",
+    url: "/statistics",
+    icon: ChartArea,
   },
   {
-    title: "Inbox",
-    url: "#",
-    icon: Inbox,
-  },
-  {
-    title: "Calendar",
-    url: "#",
-    icon: Calendar,
-  },
-  {
-    title: "Search",
-    url: "#",
-    icon: Search,
-  },
-  {
-    title: "Settings",
-    url: "#",
-    icon: Settings,
+    title: "Farm Conditions",
+    url: "/farm-conditions",
+    icon: Tractor,
   },
 ];
 
 export function AppSidebar() {
   return (
     <Sidebar>
-      <SidebarContent>
+      <SidebarContent className="py-3">
         <SidebarGroup>
-          <SidebarGroupLabel>Application</SidebarGroupLabel>
-          <SidebarGroupContent>
-            <SidebarMenu>
+          <SidebarGroupLabel className="plabs-title-bold-16">
+            Application Menu
+          </SidebarGroupLabel>
+          <SidebarGroupContent className="mt-3">
+            <SidebarMenu className="space-y-1">
               {items.map((item) => (
-                <SidebarMenuItem key={item.title}>
+                <SidebarMenuItem
+                  key={item.title}
+                  className="bg-gray-50 p-2 border rounded-md hover:bg-gray-100"
+                >
                   <SidebarMenuButton asChild>
                     <a href={item.url}>
                       <item.icon />
