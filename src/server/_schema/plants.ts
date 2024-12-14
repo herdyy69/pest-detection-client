@@ -14,6 +14,10 @@ const InsertPlants = createInsertSchema(plants)
   })
   .extend({
     created_by: z.string().default(() => "system"),
+  })
+  .refine((data) => data.name !== "", {
+    message: "Name is required",
+    path: ["name"],
   });
 
 type Plants = InferSelectModel<typeof plants>;
