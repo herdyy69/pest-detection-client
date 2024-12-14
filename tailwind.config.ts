@@ -13,6 +13,7 @@ export default {
         manrope: ["var(--font-manrope)", "sans-serif"],
       },
       colors: {
+        ...styleConfig.colorsConfig,
         background: "var(--background)",
         foreground: "var(--foreground)",
       },

@@ -1,5 +1,6 @@
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/ui/app-sidebar";
+import { Toaster } from "sonner";
 
 export default function RootLayout({
   children,
@@ -16,6 +17,7 @@ export default function RootLayout({
         </div>
         <div className="p-6">{children}</div>
       </div>
+      <Toaster position="top-right" className="lg:w-[370px] 2xl:w-[750px]" />
     </SidebarProvider>
   );
 }
