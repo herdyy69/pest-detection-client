@@ -38,6 +38,9 @@ importers:
       drizzle-orm:
         specifier: ^0.38.2
         version: 0.38.2(@types/pg@8.11.10)(@types/react@19.0.1)(pg@8.13.1)(postgres@3.4.5)(react@19.0.0)
+      drizzle-zod:
+        specifier: ^0.6.0
+        version: 0.6.0(drizzle-orm@0.38.2(@types/pg@8.11.10)(@types/react@19.0.1)(pg@8.13.1)(postgres@3.4.5)(react@19.0.0))(zod@3.24.1)
       lucide-react:
         specifier: ^0.468.0
         version: 0.468.0(react@19.0.0)
@@ -1664,6 +1667,12 @@ packages:
         optional: true
       sqlite3:
         optional: true
+
+  drizzle-zod@0.6.0:
+    resolution: {integrity: sha512-7K1k7Y/5Jw9D4cTlrHL3mRTLg3oaglbi4VvBIYmSAtMvYkgqvusPtra7cnntMCe1r1cBcwxhlEkfiNdU23lp2g==}
+    peerDependencies:
+      drizzle-orm: '>=0.36.0'
+      zod: '>=3.0.0'
 
   dunder-proto@1.0.0:
     resolution: {integrity: sha512-9+Sj30DIu+4KvHqMfLUGLFYL2PkURSYMVXJyXe92nFRvlYq5hBjLEhblKB+vkd/WVlUYMWigiY07T91Fkk0+4A==}
@@ -4365,6 +4374,11 @@ snapshots:
       pg: 8.13.1
       postgres: 3.4.5
       react: 19.0.0
+
+  drizzle-zod@0.6.0(drizzle-orm@0.38.2(@types/pg@8.11.10)(@types/react@19.0.1)(pg@8.13.1)(postgres@3.4.5)(react@19.0.0))(zod@3.24.1):
+    dependencies:
+      drizzle-orm: 0.38.2(@types/pg@8.11.10)(@types/react@19.0.1)(pg@8.13.1)(postgres@3.4.5)(react@19.0.0)
+      zod: 3.24.1
 
   dunder-proto@1.0.0:
     dependencies:
