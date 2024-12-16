@@ -1,6 +1,6 @@
 "use client";
-import { Plus } from "lucide-react";
-import React from "react";
+import { LucidePencilLine, Plus } from "lucide-react";
+import React, { useEffect } from "react";
 import {
   Dialog,
   DialogContent,
@@ -15,11 +15,14 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Plants, InsertPlants } from "@/server/_schema/plants";
 import Form from "@/components/ui/form";
 import { useForm } from "react-hook-form";
-import { serviceCreatePlants } from "@/server/_services/plants";
+import {
+  serviceCreatePlants,
+  serviceUpdatePlants,
+} from "@/server/_services/plants";
 import { toast } from "@/components/ui/alert/toast";
 import { useRouter } from "next/navigation";
 
-export const Modal = () => {
+export const Modal = ({ name, dataY }: { name: string; dataY?: any }) => {
   const router = useRouter();
   const [modal, setModal] = React.useState(false);
 
@@ -31,12 +34,37 @@ export const Modal = () => {
     resolver: zodResolver(InsertPlants),
   });
 
+  useEffect(() => {
+    if (name === "update" && dataY) {
+      form.reset({
+        name: dataY.name,
+        description: dataY.description,
+      });
+    }
+  }, [dataY]);
+
   async function onSave(data: Plants) {
     try {
+      if (name === "update") {
+        await serviceUpdatePlants(dataY.id, data).then(() => {
+          toast.success({
+            title: "Success",
+            body: "Field updated successfully",
+          });
+          form.reset({
+            name: "",
+            description: "",
+          });
+          setModal(false);
+          router.refresh();
+        });
+        return;
+      }
+
       await serviceCreatePlants(data).then(() => {
         toast.success({
           title: "Success",
-          body: "Class created successfully",
+          body: "Field created successfully",
         });
         form.reset({
           name: "",
@@ -64,15 +92,25 @@ export const Modal = () => {
         }}
       >
         <DialogTrigger asChild>
-          <button className="btn btn-green flex items-center">
-            <Plus className="h-4 w-4 mr-1" />
-            Add Field
-          </button>
+          {name === "create" ? (
+            <button className="btn btn-green flex items-center">
+              <Plus className="h-4 w-4 mr-1" />
+              Add Field
+            </button>
+          ) : (
+            <LucidePencilLine size={16} className="cursor-pointer" />
+          )}
         </DialogTrigger>
         <DialogContent className="bg-white sm:max-w-[425px] min-w-[600px]">
           <DialogHeader>
-            <DialogTitle>Create Field</DialogTitle>
-            <DialogDescription>Add a new field to your form</DialogDescription>
+            <DialogTitle>
+              {name === "create" ? "Add Field" : "Update Field"}
+            </DialogTitle>
+            <DialogDescription>
+              {name === "create"
+                ? "Add a new field to the field map"
+                : "Update field information here"}
+            </DialogDescription>
           </DialogHeader>
           <Form form={form} onSave={onSave}>
             <Form.Input

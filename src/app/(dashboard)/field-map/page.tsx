@@ -13,7 +13,7 @@ export default async function Page(params: { searchParams: SearchParams }) {
         <h1 className="plabs-headline-bold-24 font-semibold text-gray-900">
           Field Map
         </h1>
-        <Modal />
+        <Modal name="create" />
       </div>
       <Table data={data} />
     </div>
