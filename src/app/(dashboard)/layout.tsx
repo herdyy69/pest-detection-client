@@ -1,8 +1,9 @@
-import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
+import { SidebarProvider } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/ui/app-sidebar";
 import { Toaster } from "sonner";
 import { Camera } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 
 export default function RootLayout({
   children,
@@ -15,7 +16,13 @@ export default function RootLayout({
       <div className="w-full">
         <div className="w-full p-6 border-b flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <SidebarTrigger />
+            <Image
+              src="/logo.png"
+              alt="SakuraCrop Defender"
+              width={40}
+              height={40}
+              className="rounded"
+            />
             <h2 className="plabs-headline-semibold-24">SakuraCrop Defender</h2>
           </div>
           <div className="flex items-center gap-2">
