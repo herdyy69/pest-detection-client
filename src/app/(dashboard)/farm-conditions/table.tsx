@@ -36,7 +36,8 @@ const Table = ({ data }: { data: any }) => {
     {
       header: "Scanned At",
       accessorKey: "created_at",
-      cell: (row: any) => moment(row.created_at).format("YYYY-MM-DD"),
+      cell: ({ row }: any) =>
+        moment(row.original.created_at).format("YYYY-MM-DD HH:mm:ss"),
       enableSorting: false,
       size: 200,
     },
