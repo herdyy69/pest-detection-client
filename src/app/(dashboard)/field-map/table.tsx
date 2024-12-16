@@ -4,9 +4,31 @@ import DataTable from "@/components/ui/table/dataTable";
 import { Trash } from "lucide-react";
 import React from "react";
 import { Modal } from "./modal";
+import { serviceDeletePlants } from "@/server/_services/plants";
+import { toast } from "@/components/ui/alert/toast";
+import { useRouter } from "next/navigation";
 
 const Table = ({ data }: { data: any }) => {
-  const [open, setOpen] = React.useState(false);
+  const router = useRouter();
+
+  async function onDelete(id: string) {
+    try {
+      await serviceDeletePlants(id).then(() => {
+        toast.success({
+          title: "Success",
+          body: "Field deleted successfully",
+        });
+        router.refresh();
+      });
+    } catch (error) {
+      if (error instanceof Error) {
+        toast.error({
+          title: "Error",
+          body: error.message || "Failed to delete field",
+        });
+      }
+    }
+  }
   const columns = [
     {
       header: "Field Name",
@@ -36,7 +58,9 @@ const Table = ({ data }: { data: any }) => {
               trigger={
                 <Trash size={16} className="cursor-pointer text-red-500" />
               }
-              onConfirm={() => {}}
+              onConfirm={() => {
+                onDelete(row.original.id);
+              }}
               onReject={() => {}}
             />
           </div>
