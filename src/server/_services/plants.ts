@@ -59,6 +59,28 @@ export const getPlantsById = async (id: Plants["id"]) => {
       id: true,
       name: true,
     },
+    with: {
+      scans: {
+        columns: {
+          id: true,
+          image_url_raw: true,
+          image_url_processed: true,
+          created_at: true,
+          created_by: true,
+        },
+        with: {
+          detections: {
+            columns: {
+              id: true,
+              label: true,
+              confidence: true,
+              count: true,
+              percentage: true,
+            },
+          },
+        },
+      },
+    },
     where: eq(plants.id, id),
   });
 
