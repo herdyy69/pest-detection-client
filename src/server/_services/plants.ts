@@ -26,7 +26,7 @@ export const servicePlants = async (request: SearchParams) => {
       ? sort === "ASC"
         ? asc(plants[order_by as OrderByField])
         : desc(plants[order_by as OrderByField])
-      : undefined,
+      : desc(plants.created_at),
     limit: Number(limit),
     offset: (Number(page) - 1) * Number(limit),
   });
