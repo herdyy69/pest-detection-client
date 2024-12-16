@@ -21,6 +21,19 @@ export const servicePlants = async (request: SearchParams) => {
       updated_at: true,
       updated_by: true,
     },
+    with: {
+      scans: {
+        columns: {
+          id: true,
+          image_url_raw: true,
+          image_url_processed: true,
+          created_at: true,
+          created_by: true,
+        },
+        orderBy: desc(plants.created_at),
+        limit: 1,
+      },
+    },
     where: (plants, { ilike }) => ilike(plants.name, `%${search}%`),
     orderBy: order_by
       ? sort === "ASC"

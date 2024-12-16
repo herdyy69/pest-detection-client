@@ -7,6 +7,8 @@ import { Modal } from "./modal";
 import { serviceDeletePlants } from "@/server/_services/plants";
 import { toast } from "@/components/ui/alert/toast";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
+import moment from "moment";
 
 const Table = ({ data }: { data: any }) => {
   const router = useRouter();
@@ -39,6 +41,30 @@ const Table = ({ data }: { data: any }) => {
     {
       header: "Description",
       accessorKey: "description",
+      enableSorting: false,
+      size: 200,
+    },
+    {
+      header: "Last Scan",
+      accessorKey: "scans[0].id",
+      cell: ({ row }: any) => {
+        return (
+          <>
+            {row?.original?.scans[0]?.id ? (
+              <Link
+                href={`/farm-conditions/${row?.original?.scans[0]?.id}`}
+                className="text-blue-base underline"
+              >
+                {moment(row?.original?.scans[0]?.created_at).format(
+                  "YYYY-MM-DD HH:mm:ss"
+                )}
+              </Link>
+            ) : (
+              "No scan yet"
+            )}
+          </>
+        );
+      },
       enableSorting: false,
       size: 200,
     },
