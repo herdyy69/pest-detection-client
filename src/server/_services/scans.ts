@@ -42,7 +42,7 @@ export const serviceScans = async (request: SearchParams) => {
       ? sort === "ASC"
         ? asc(scans[order_by as OrderByField])
         : desc(scans[order_by as OrderByField])
-      : undefined,
+      : desc(scans.created_at),
     limit: Number(limit),
     offset: (Number(page) - 1) * Number(limit),
   });
