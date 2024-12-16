@@ -28,8 +28,6 @@ const Table = ({ data }: { data: any }) => {
           <div className="flex items-center space-x-2 pl-2">
             <Modal name="update" dataY={row.original} />
             <DialogConfirmation
-              open={open}
-              setOpen={setOpen}
               title="Delete General Ledger"
               body="Are you sure you want to delete this general ledger?"
               confirmText="Delete"
