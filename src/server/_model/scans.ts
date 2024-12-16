@@ -12,6 +12,7 @@ const scans = pgTable("scans", {
     .references(() => plants.id, { onDelete: "cascade" }),
   image_url_raw: text("image_url_raw"),
   image_url_processed: text("image_url_processed").notNull(),
+  result_ai: text("result_ai"),
   created_at: text("created_at")
     .notNull()
     .$defaultFn(() => new Date().toISOString()),

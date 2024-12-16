@@ -15,6 +15,13 @@
       "when": 1734329502805,
       "tag": "0001_typical_morg",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1734362450318,
+      "tag": "0002_moaning_namora",
+      "breakpoints": true
     }
   ]
 }
