@@ -121,6 +121,7 @@ export const serviceUpdatePlants = async (
       .update(plants)
       .set({
         ...data,
+        updated_at: new Date().toISOString(),
       })
       .where(eq(plants.id, id))
       .returning();
