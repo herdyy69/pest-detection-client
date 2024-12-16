@@ -12,11 +12,11 @@ import {
 } from "@/components/ui/sidebar";
 
 const items = [
-  {
-    title: "Statistics",
-    url: "/statistics",
-    icon: ChartArea,
-  },
+  // {
+  //   title: "Statistics",
+  //   url: "/statistics",
+  //   icon: ChartArea,
+  // },
   {
     title: "Farm Conditions",
     url: "/farm-conditions",
