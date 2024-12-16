@@ -10,7 +10,7 @@ const scans = pgTable("scans", {
   plant_id: text("plant_id")
     .notNull()
     .references(() => plants.id, { onDelete: "cascade" }),
-  image_url_raw: text("image_url_raw").notNull(),
+  image_url_raw: text("image_url_raw"),
   image_url_processed: text("image_url_processed").notNull(),
   created_at: text("created_at")
     .notNull()

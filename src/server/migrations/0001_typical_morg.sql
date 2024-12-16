@@ -1,0 +1,1 @@
+ALTER TABLE "scans" ALTER COLUMN "image_url_raw" DROP NOT NULL;
