@@ -3,6 +3,7 @@ import DataTable from "@/components/ui/table/dataTable";
 import React from "react";
 import moment from "moment";
 import Link from "next/link";
+import { Info } from "lucide-react";
 
 const Table = ({ data }: { data: any }) => {
   const columns = [
@@ -52,18 +53,18 @@ const Table = ({ data }: { data: any }) => {
       accessorKey: "id",
       cell: ({ row }: any) => {
         return (
-          <div className="flex items-center space-x-2">
+          <div className="flex items-center space-x-2 pl-4">
             <Link
               href={`/farm-conditions/${row.original.id}`}
-              className="text-blue-base underline"
+              className="underline"
             >
-              View
+              <Info size={20} />
             </Link>
           </div>
         );
       },
       enableSorting: false,
-      size: 200,
+      size: 50,
     },
   ];
 
