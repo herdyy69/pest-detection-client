@@ -10,6 +10,7 @@ const InsertScans = createInsertSchema(scans)
     plant_id: true,
     image_url_raw: true,
     image_url_processed: true,
+    result_ai: true,
   })
   .extend({
     created_by: z.string().default(() => "system"),

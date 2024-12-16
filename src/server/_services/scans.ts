@@ -7,8 +7,18 @@ import { asc, desc, eq, sql } from "drizzle-orm";
 import { SearchParams } from "@/server/_schema/api";
 import { ZodError } from "zod";
 import { InsertDetections } from "../_schema/detections";
+import { GoogleGenerativeAI } from "@google/generative-ai";
 
 type OrderByField = keyof Scans;
+
+export const serviceGenerateAI = async (prompt: string) => {
+  const generativeAI = new GoogleGenerativeAI(process.env.GENERATIVE_AI_KEY!);
+  const model = generativeAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+
+  const result = await model.generateContent(prompt);
+
+  return result;
+};
 
 export const serviceScans = async (request: SearchParams) => {
   const { page = 1, limit = 10, order_by, sort } = request;
@@ -66,6 +76,7 @@ export const getScansById = async (id: Scans["id"]) => {
       id: true,
       image_url_raw: true,
       image_url_processed: true,
+      result_ai: true,
       created_at: true,
       created_by: true,
     },
@@ -94,12 +105,21 @@ export const getScansById = async (id: Scans["id"]) => {
 
 export const serviceCreateScans = async (
   scanPayload: InsertScans,
-  detectionsPayload: InsertDetections[]
+  detectionsPayload: InsertDetections[],
+  prompt: string
 ) => {
   try {
     const data = InsertScans.parse(scanPayload);
 
-    const [scan] = await db.insert(scans).values(data).returning();
+    const resultAI = await serviceGenerateAI(prompt);
+
+    const [scan] = await db
+      .insert(scans)
+      .values({
+        ...data,
+        result_ai: resultAI.response.text(),
+      })
+      .returning();
 
     const detectionPayload = detectionsPayload.map((detection) => ({
       ...detection,
