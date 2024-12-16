@@ -80,3 +80,34 @@ body {
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
 }
+
+.content-wysiwyg ul {
+  @apply plabs-body-regular-14;
+  list-style-type: disc;
+  padding-left: 1.5rem;
+}
+
+.content-wysiwyg ol {
+  @apply plabs-body-regular-14;
+  list-style-type: decimal;
+  padding-left: 1.5rem;
+}
+
+.content-wysiwyg h1 {
+  @apply plabs-title-semibold-20;
+}
+
+.content-wysiwyg h2 {
+  @apply plabs-title-semibold-16;
+}
+
+.content-wysiwyg h3,
+h4,
+h5,
+h6 {
+  @apply plabs-title-semibold-14;
+}
+
+.content-wysiwyg p {
+  @apply plabs-body-regular-14;
+}

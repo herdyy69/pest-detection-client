@@ -14,7 +14,7 @@ export default async function Page({
   const data = await getScansById(params.id);
 
   return (
-    <div className="space-y-4">
+    <div className="flex flex-col gap-4">
       <div className="flex items-center justify-between">
         <h1 className="plabs-headline-bold-24 font-semibold text-gray-900">
           Farm Conditions - {data?.plant?.name} -{" "}
@@ -36,6 +36,11 @@ export default async function Page({
         className="rounded-lg"
       />
       <Table data={data} />
+
+      <div
+        className="plabs-body-regular-16 text-gray-900 space-y-2 content-wysiwyg mt-5 w-[80%]"
+        dangerouslySetInnerHTML={{ __html: data?.result_ai || "" }}
+      />
     </div>
   );
 }
