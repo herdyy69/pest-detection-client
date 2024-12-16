@@ -105,9 +105,9 @@ export const DialogConfirmation = ({
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button className={triggerClassName} type="button" {...rest}>
+        <button className={triggerClassName} type="button" {...rest}>
           {trigger}
-        </Button>
+        </button>
       </DialogTrigger>
       <DialogContent
         onInteractOutside={handleInteractOutside}
