@@ -17,8 +17,12 @@ import Form from "@/components/ui/form";
 import { useForm } from "react-hook-form";
 import { serviceCreatePlants } from "@/server/_services/plants";
 import { toast } from "@/components/ui/alert/toast";
+import { useRouter } from "next/navigation";
 
 export const Modal = () => {
+  const router = useRouter();
+  const [modal, setModal] = React.useState(false);
+
   const form = useForm<Plants>({
     defaultValues: {
       name: "",
@@ -38,11 +42,12 @@ export const Modal = () => {
           name: "",
           description: "",
         });
+        setModal(false);
+        router.refresh();
       });
     } catch (error) {
       if (error instanceof Error) {
         const validationErrors = JSON.parse(error.message);
-
         toast.error({
           title: "Error",
           body: validationErrors[0].message || "Failed to create class",
@@ -52,7 +57,12 @@ export const Modal = () => {
   }
   return (
     <div>
-      <Dialog>
+      <Dialog
+        open={modal}
+        onOpenChange={(isOpen) => {
+          setModal(isOpen);
+        }}
+      >
         <DialogTrigger asChild>
           <button className="btn btn-green flex items-center">
             <Plus className="h-4 w-4 mr-1" />
