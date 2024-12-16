@@ -24,9 +24,23 @@ export const Camera = ({ plants }: { plants: any }) => {
   });
 
   useEffect(() => {
+    fetch("/example.jpg")
+      .then((res) => res.blob())
+      .then((blob) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(blob);
+        reader.onloadend = () => {
+          const base64data = reader.result;
+          setImage(base64data as string);
+        };
+      });
+  }, []);
+
+  useEffect(() => {
     if (image) {
       const blob = base64ToBlob(image);
       const formData = new FormData();
+
       formData.append("image", blob, "image.jpg");
       fetch(process.env.NEXT_PUBLIC_API_URL + "/detect", {
         method: "POST",
@@ -41,8 +55,19 @@ export const Camera = ({ plants }: { plants: any }) => {
   }, [image]);
 
   async function onSave(data: any) {
+    const detection = detecting?.detections.map((detection: any) => {
+      return {
+        label: detection.label,
+        percentage: detection.percentage + "%",
+      };
+    });
+
+    const prompt = `Cara penanggulangan hama alami untuk data ini: ${JSON.stringify(
+      detection
+    )}. Tolong response nya jadi tag h1-h6,p,ul,ol,li dan yang lainnya.`;
+
     try {
-      await serviceCreateScans(data, detecting?.detections).then(() => {
+      await serviceCreateScans(data, detecting?.detections, prompt).then(() => {
         toast.success({
           title: "Success",
           body: "Successfully created detection",
@@ -66,6 +91,7 @@ export const Camera = ({ plants }: { plants: any }) => {
     <div className="w-screen h-screen flex flex-col items-center justify-end">
       <CameraPro
         ref={camera}
+        facingMode="environment"
         errorMessages={{
           noCameraAccessible:
             "No camera device accessible. Please connect your camera or try a different browser.",
