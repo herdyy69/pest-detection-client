@@ -4,7 +4,6 @@ import {
   DialogClose,
   DialogContent,
   DialogFooter,
-  DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog/dialog";
@@ -31,8 +30,6 @@ interface DialogFormInterface {
   onReject?: () => void;
   onClose?: () => void;
 
-  open: boolean;
-  setOpen: (open: boolean) => void;
   triggerClassName?: string;
 }
 
@@ -75,8 +72,6 @@ const getIcon = (icon: any) => {
 };
 
 export const DialogConfirmation = ({
-  open,
-  setOpen,
   trigger,
   triggerButton,
   triggerClassName,
@@ -103,7 +98,7 @@ export const DialogConfirmation = ({
   const layoutCenter = layout === "center";
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog>
       <DialogTrigger asChild>
         <button className={triggerClassName} type="button" {...rest}>
           {trigger}
@@ -139,22 +134,24 @@ export const DialogConfirmation = ({
         </div>
         <DialogFooter className="bg-white border-t border-primary-2-100">
           <div className={"w-full flex justify-end py-4 px-4 gap-2"}>
-            <Button
+            <DialogClose
               className={cn(
-                "btn px-8 ",
+                "btn btn-outline-greyscale py-1 px-8 ",
                 layoutCenter && "w-full",
                 getColorStyle(color).cancel
               )}
               type="button"
-              onClick={() => setOpen(false)}
+              onClick={() => {
+                onClose && onClose();
+                onReject && onReject();
+              }}
               disabled={isLoading}
             >
               {rejectText ?? "Batal"}
-            </Button>
-
-            <Button
+            </DialogClose>
+            <DialogClose
               className={cn(
-                "btn px-8",
+                "btn btn-red px-8",
                 layoutCenter && "w-full",
                 getColorStyle(color).confirm
               )}
@@ -164,7 +161,7 @@ export const DialogConfirmation = ({
               onClick={() => onConfirm && onConfirm()}
             >
               {confirmText ?? "Delete"}
-            </Button>
+            </DialogClose>
           </div>
         </DialogFooter>
       </DialogContent>
