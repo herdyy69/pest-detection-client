@@ -25,18 +25,18 @@ export const Camera = ({ plants }: { plants: any }) => {
     resolver: zodResolver(InsertScans),
   });
 
-  useEffect(() => {
-    fetch("/example.jpg")
-      .then((res) => res.blob())
-      .then((blob) => {
-        const reader = new FileReader();
-        reader.readAsDataURL(blob);
-        reader.onloadend = () => {
-          const base64data = reader.result;
-          setImage(base64data as string);
-        };
-      });
-  }, []);
+  // useEffect(() => {
+  //   fetch("/example.jpg")
+  //     .then((res) => res.blob())
+  //     .then((blob) => {
+  //       const reader = new FileReader();
+  //       reader.readAsDataURL(blob);
+  //       reader.onloadend = () => {
+  //         const base64data = reader.result;
+  //         setImage(base64data as string);
+  //       };
+  //     });
+  // }, []);
 
   useEffect(() => {
     if (image) {
