@@ -1,15 +1,28 @@
 "use client";
 import React, { useState, useRef, useEffect } from "react";
 import { Camera as CameraPro } from "react-camera-pro";
-import { Camera as CameraIcon, Check, X, ArrowLeft } from "lucide-react";
+import {
+  Camera as CameraIcon,
+  Check,
+  X,
+  ArrowLeft,
+  Upload as UploadIcon,
+} from "lucide-react";
 import { base64ToBlob } from "@/lib/file";
 import { useForm } from "react-hook-form";
 import { InsertScans, Scans } from "@/server/_schema/scans";
 import { zodResolver } from "@hookform/resolvers/zod";
-import Form from "@/components/ui/form";
 import { toast } from "@/components/ui/alert/toast";
 import Link from "next/link";
 import axios from "axios";
+import Form from "@/components/ui/form";
+import {
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog/dialog";
+import UploadField from "@/components/ui/form/upload";
 
 function handleServiceError(error: any) {
   if (error instanceof Error) {
@@ -35,6 +48,7 @@ function handleServiceError(error: any) {
 
 export const Camera = ({ plants }: { plants: any }) => {
   const camera = useRef<any>(null);
+  const [modal, setModal] = React.useState(false);
   const [image, setImage] = useState<string | null>(null);
   const [detecting, setDetecting] = useState<any>({});
   const [loading, setLoading] = useState(false);
@@ -72,6 +86,8 @@ export const Camera = ({ plants }: { plants: any }) => {
 
   useEffect(() => {
     if (image) {
+      setModal(false);
+
       const blob = base64ToBlob(image);
       const formData = new FormData();
 
@@ -183,16 +199,48 @@ export const Camera = ({ plants }: { plants: any }) => {
         >
           <ArrowLeft size={16} /> Back to List Farm Conditions
         </Link>
-        <button
-          onClick={() => {
-            if (camera.current) {
-              setImage(camera.current.takePhoto());
-            }
-          }}
-          className="fixed bottom-4 z-50 bg-white text-black p-4 rounded-full"
-        >
-          <CameraIcon size={30} />
-        </button>
+        <div className="fixed bottom-4 z-50 flex items-center gap-2">
+          <button
+            onClick={() => {
+              if (camera.current) {
+                setImage(camera.current.takePhoto());
+              }
+            }}
+            className="bg-white text-black p-4 rounded-full"
+          >
+            <CameraIcon size={30} />
+          </button>
+          <Dialog
+            open={modal}
+            onOpenChange={(isOpen) => {
+              setModal(isOpen);
+            }}
+          >
+            <DialogTrigger asChild>
+              <button className="bg-white text-black p-4 rounded-full">
+                <UploadIcon size={30} />
+              </button>
+            </DialogTrigger>
+            <DialogContent className="bg-white sm:max-w-[425px] min-w-[250px]">
+              <DialogTitle>Upload Image</DialogTitle>
+              <div className="">
+                <Form form={form} onSave={onSave}>
+                  <UploadField
+                    name="image"
+                    onChange={(file) => {
+                      const reader = new FileReader();
+                      reader.readAsDataURL(file);
+                      reader.onloadend = () => {
+                        const base64data = reader.result;
+                        setImage(base64data as string);
+                      };
+                    }}
+                  />
+                </Form>
+              </div>
+            </DialogContent>
+          </Dialog>
+        </div>
         {image && (
           <>
             <div className="fixed top-0 left-0 w-screen h-screen bg-black bg-opacity-50 z-[100]" />
