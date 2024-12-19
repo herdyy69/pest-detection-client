@@ -197,7 +197,7 @@ export const Camera = ({ plants }: { plants: any }) => {
           <>
             <div className="fixed top-0 left-0 w-screen h-screen bg-black bg-opacity-50 z-[100]" />
             <div className="fixed p-4 top-0 right-0 z-[101]">
-              <div className="relative w-[300px] h-[400px] shadow-lg border border-white rounded-lg overflow-hidden">
+              <div className="relative w-[300px] md:w-[400px] h-[400px] shadow-lg border border-white rounded-lg overflow-hidden">
                 <img
                   src={
                     (detecting?.detections?.length > 0 &&
