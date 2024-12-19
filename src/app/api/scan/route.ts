@@ -26,7 +26,7 @@ export async function POST(request: NextRequest) {
 
     const prompt = `Cara penanggulangan hama alami untuk data ini: ${JSON.stringify(
       detection
-    )}. Tolong response nya jadi tag h1-h6,p,ul,ol,li dan yang lainnya.`;
+    )}. Tolong response nya jadi tag h1-h6,p,ul,ol,li dan yang lainnya. Pake bahasa Inggris ya.`;
 
     const generalLedger = await serviceCreateScans(data, detections, prompt);
 
