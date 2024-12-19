@@ -38,11 +38,16 @@ export const Camera = ({ plants }: { plants: any }) => {
   const [image, setImage] = useState<string | null>(null);
   const [detecting, setDetecting] = useState<any>({});
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<any | null>(null);
 
   useEffect(() => {
-    console.log(error);
-  }, [error]);
+    if (detecting?.detections?.length === 0) {
+      toast.error({
+        title: "Error",
+        body: "No detections found. Please try again.",
+      });
+      setImage(null);
+    }
+  }, [detecting?.detections]);
 
   const form = useForm<Scans>({
     defaultValues: {
@@ -124,7 +129,6 @@ export const Camera = ({ plants }: { plants: any }) => {
       setDetecting({});
       form.reset();
     } catch (error: any) {
-      setError(error);
       handleServiceError(error);
     }
 
@@ -193,7 +197,7 @@ export const Camera = ({ plants }: { plants: any }) => {
           <>
             <div className="fixed top-0 left-0 w-screen h-screen bg-black bg-opacity-50 z-[100]" />
             <div className="fixed p-4 top-0 right-0 z-[101]">
-              <div className="relative w-full max-w-[350px] max-h-[500px] shadow-lg border border-white rounded-lg overflow-hidden">
+              <div className="relative w-[300px] h-[400px] shadow-lg border border-white rounded-lg overflow-hidden">
                 <img
                   src={
                     (detecting?.detections?.length > 0 &&
