@@ -61,10 +61,10 @@ export const Camera = ({ plants }: { plants: any }) => {
     }
   }, [image]);
 
-  async function onSave(data: any) {
+  async function onSave(data: Scans) {
     setLoading(true);
 
-    const detection = detecting?.detections.map((detection: any) => {
+    const detection = detecting?.detections.map((detection: { label: string; percentage: number }) => {
       return {
         label: detection.label,
         percentage: detection.percentage + "%",
@@ -85,14 +85,21 @@ export const Camera = ({ plants }: { plants: any }) => {
         setDetecting({});
         form.reset();
       });
-    } catch (error) {
+    } catch (error: any) {
       setError(error);
       if (error instanceof Error) {
-        const validationErrors = JSON.parse(error.message);
-        toast.error({
-          title: "Error",
-          body: validationErrors[0].message || "Failed to create class",
-        });
+        try {
+          const validationErrors = JSON.parse(error.message);
+          toast.error({
+            title: "Error",
+            body: validationErrors[0].message || "Failed to create class",
+          });
+        } catch (e) {
+          toast.error({
+            title: "Error",
+            body: error.message || "Failed to create class",
+          });
+        }
       }
     }
 
