@@ -16,9 +16,10 @@ export async function POST(request: NextRequest) {
     const detections = payload.detections;
 
     const detection = detections?.map(
-      (detection: { label: string; percentage: number }) => {
+      (detection: { label: string; percentage: number; count: number }) => {
         return {
           label: detection.label,
+          count: detection.count,
           percentage: `${detection.percentage}%`,
         };
       }

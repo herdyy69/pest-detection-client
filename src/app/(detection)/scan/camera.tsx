@@ -108,9 +108,10 @@ export const Camera = ({ plants }: { plants: any }) => {
     setLoading(true);
 
     const detection = detecting?.detections?.map(
-      (detection: { label: string; percentage: number }) => {
+      (detection: { label: string; percentage: number; count: number }) => {
         return {
           label: detection.label,
+          count: detection.count,
           percentage: `${detection.percentage}%`,
         };
       }

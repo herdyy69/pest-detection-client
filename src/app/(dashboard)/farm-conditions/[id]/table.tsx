@@ -9,7 +9,7 @@ const Table = ({ data }: { data: any }) => {
 
   const columns = [
     {
-      label: "Label",
+      header: "Label",
       accessorKey: "label",
       enableSorting: false,
       size: 200,
