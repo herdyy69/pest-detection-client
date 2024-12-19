@@ -15,14 +15,14 @@ export default async function Page({
 
   return (
     <div className="flex flex-col gap-4">
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
         <h1 className="plabs-headline-bold-24 font-semibold text-gray-900">
           Farm Conditions - {data?.plant?.name} -{" "}
           {moment(data?.created_at).format("YYYY-MM-DD HH:mm:ss")}
         </h1>
         <Link
           href="/farm-conditions"
-          className="btn btn-outline-greyscale flex items-center"
+          className="w-max btn btn-outline-greyscale flex items-center"
         >
           <ArrowLeft className="h-4 w-4 mr-1" />
           Back to List Farm Conditions

@@ -14,7 +14,7 @@ export default function RootLayout({
     <SidebarProvider>
       <AppSidebar />
       <div className="w-full">
-        <div className="w-full p-6 border-b flex items-center justify-between">
+        <div className="w-full p-6 border-b flex flex-col md:flex-row md:items-center md:justify-between gap-4">
           <div className="flex items-center gap-2">
             <Image
               src="/logo.png"
