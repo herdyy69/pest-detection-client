@@ -23,7 +23,7 @@ const Table = ({ data }: { data: any }) => {
     {
       header: "Percentage",
       accessorKey: "percentage",
-      cell: ({ row }: any) => row.original.percentage + "%",
+      cell: ({ row }: any) => row.original.percentage,
       enableSorting: false,
       size: 200,
     },
