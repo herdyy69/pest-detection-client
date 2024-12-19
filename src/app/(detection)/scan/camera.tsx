@@ -16,6 +16,11 @@ export const Camera = ({ plants }: { plants: any }) => {
   const [image, setImage] = useState<string | null>(null);
   const [detecting, setDetecting] = useState<any>({});
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<any | null>(null);
+
+  useEffect(() => {
+    console.log(error);
+  }, [error]);
 
   const form = useForm<Scans>({
     defaultValues: {
@@ -81,6 +86,7 @@ export const Camera = ({ plants }: { plants: any }) => {
         form.reset();
       });
     } catch (error) {
+      setError(error);
       if (error instanceof Error) {
         const validationErrors = JSON.parse(error.message);
         toast.error({
