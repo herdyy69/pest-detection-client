@@ -64,19 +64,25 @@ export const Camera = ({ plants }: { plants: any }) => {
   async function onSave(data: Scans) {
     setLoading(true);
 
-    const detection = detecting?.detections.map((detection: { label: string; percentage: number }) => {
-      return {
-        label: detection.label,
-        percentage: detection.percentage + "%",
-      };
-    });
+    // const detection = detecting?.detections.map(
+    //   (detection: { label: string; percentage: number }) => {
+    //     return {
+    //       label: detection.label,
+    //       percentage: detection.percentage + "%",
+    //     };
+    //   }
+    // );
 
-    const prompt = `Cara penanggulangan hama alami untuk data ini: ${JSON.stringify(
-      detection
-    )}. Tolong response nya jadi tag h1-h6,p,ul,ol,li dan yang lainnya.`;
+    // const prompt = `Cara penanggulangan hama alami untuk data ini: ${JSON.stringify(
+    //   detection
+    // )}. Tolong response nya jadi tag h1-h6,p,ul,ol,li dan yang lainnya.`;
 
     try {
-      await serviceCreateScans(data, detecting?.detections, prompt).then(() => {
+      await serviceCreateScans(
+        data,
+        detecting?.detections,
+        "Cara penanggulangan hama alami untuk data"
+      ).then(() => {
         toast.success({
           title: "Success",
           body: "Successfully created detection",
