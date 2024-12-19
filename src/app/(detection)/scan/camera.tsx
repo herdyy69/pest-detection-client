@@ -8,8 +8,8 @@ import { InsertScans, Scans } from "@/server/_schema/scans";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Form from "@/components/ui/form";
 import { toast } from "@/components/ui/alert/toast";
-import { serviceCreateScans } from "@/server/_services/scans";
 import Link from "next/link";
+import axios from "axios";
 
 function handleServiceError(error: any) {
   if (error instanceof Error) {
@@ -109,11 +109,18 @@ export const Camera = ({ plants }: { plants: any }) => {
     )}. Tolong response nya jadi tag h1-h6,p,ul,ol,li dan yang lainnya.`;
 
     try {
-      await serviceCreateScans(
-        data,
-        detecting?.detections,
-        "Cara penanggulangan hama alami untuk data"
-      );
+      await axios
+        .post(process.env.NEXT_PUBLIC_BASE_URL + "/api/scan", {
+          plant_id: data.plant_id,
+          image_url_processed: data.image_url_processed,
+          detections: detection,
+          result_ai: prompt,
+          created_by: "system",
+        })
+        .then((res) => {
+          console.log(res);
+        });
+
       toast.success({
         title: "Success",
         body: "Successfully created detection",
