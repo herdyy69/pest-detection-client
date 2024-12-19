@@ -137,7 +137,7 @@ export const Camera = ({ plants }: { plants: any }) => {
         />
         <Link
           href="/farm-conditions"
-          className="fixed top-4 left-4 z-50 flex items-center gap-2 plabs-caption-bold-12 text-blue-base underline bg-white px-4 py-2 rounded-md"
+          className="fixed top-4 left-4 z-50 hidden lg:flex items-center gap-2 plabs-caption-bold-12 text-blue-base underline bg-white px-4 py-2 rounded-md "
         >
           <ArrowLeft size={16} /> Back to List Farm Conditions
         </Link>

@@ -3,15 +3,15 @@ import Link from "next/link";
 
 export default function Home() {
   return (
-    <div className="w-screen h-screen flex items-center justify-center gap-6">
+    <div className="w-screen h-screen flex flex-col sm:flex-row items-center justify-center gap-6 p-8">
       <Image
         src="/logo.png"
         alt="SakuraCrop Defender"
         width={250}
         height={250}
-        className="rounded-lg"
+        className="rounded-lg w-full sm:w-[250px]"
       />
-      <div className="flex flex-col gap-2 w-[20%]">
+      <div className="flex flex-col gap-2 w-full sm:w-[50%] lg:w-[20%]">
         <h1 className="plabs-headline-bold-24 font-semibold text-gray-900">
           Welcome to SakuraCrop Defender
         </h1>
