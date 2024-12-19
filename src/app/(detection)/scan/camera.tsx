@@ -11,6 +11,28 @@ import { toast } from "@/components/ui/alert/toast";
 import { serviceCreateScans } from "@/server/_services/scans";
 import Link from "next/link";
 
+function handleServiceError(error: any) {
+  if (error instanceof Error) {
+    try {
+      const validationErrors = JSON.parse(error.message);
+      toast.error({
+        title: "Error",
+        body: validationErrors[0]?.message || "Failed to create class",
+      });
+    } catch {
+      toast.error({
+        title: "Error",
+        body: error.message || "An unexpected error occurred.",
+      });
+    }
+  } else {
+    toast.error({
+      title: "Error",
+      body: "An unknown error occurred.",
+    });
+  }
+}
+
 export const Camera = ({ plants }: { plants: any }) => {
   const camera = useRef<any>(null);
   const [image, setImage] = useState<string | null>(null);
@@ -64,49 +86,44 @@ export const Camera = ({ plants }: { plants: any }) => {
   async function onSave(data: Scans) {
     setLoading(true);
 
-    // const detection = detecting?.detections.map(
-    //   (detection: { label: string; percentage: number }) => {
-    //     return {
-    //       label: detection.label,
-    //       percentage: detection.percentage + "%",
-    //     };
-    //   }
-    // );
+    const detection = detecting?.detections?.map(
+      (detection: { label: string; percentage: number }) => {
+        return {
+          label: detection.label,
+          percentage: `${detection.percentage}%`,
+        };
+      }
+    );
 
-    // const prompt = `Cara penanggulangan hama alami untuk data ini: ${JSON.stringify(
-    //   detection
-    // )}. Tolong response nya jadi tag h1-h6,p,ul,ol,li dan yang lainnya.`;
+    if (!detection || detection.length === 0) {
+      toast.error({
+        title: "Error",
+        body: "No detections found. Please try again.",
+      });
+      setLoading(false);
+      return;
+    }
+
+    const prompt = `Cara penanggulangan hama alami untuk data ini: ${JSON.stringify(
+      detection
+    )}. Tolong response nya jadi tag h1-h6,p,ul,ol,li dan yang lainnya.`;
 
     try {
       await serviceCreateScans(
         data,
         detecting?.detections,
         "Cara penanggulangan hama alami untuk data"
-      ).then(() => {
-        toast.success({
-          title: "Success",
-          body: "Successfully created detection",
-        });
-        setImage(null);
-        setDetecting({});
-        form.reset();
+      );
+      toast.success({
+        title: "Success",
+        body: "Successfully created detection",
       });
+      setImage(null);
+      setDetecting({});
+      form.reset();
     } catch (error: any) {
       setError(error);
-      if (error instanceof Error) {
-        try {
-          const validationErrors = JSON.parse(error.message);
-          toast.error({
-            title: "Error",
-            body: validationErrors[0].message || "Failed to create class",
-          });
-        } catch (e) {
-          toast.error({
-            title: "Error",
-            body: error.message || "Failed to create class",
-          });
-        }
-      }
+      handleServiceError(error);
     }
 
     setLoading(false);
