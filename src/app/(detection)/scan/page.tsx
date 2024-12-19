@@ -1,9 +1,13 @@
 import { Camera } from "./camera";
-import { servicePlants } from "@/server/_services/plants";
 import { SearchParams } from "@/server/_schema/api";
 
 export default async function Page(params: { searchParams: SearchParams }) {
-  const data = await servicePlants({ page: 1, limit: 9999, search: "" });
+  const data = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/plants`, {
+    cache: "no-cache",
+    next: {
+      tags: ["plants"],
+    },
+  }).then((res) => res.json());
 
   return (
     <div>

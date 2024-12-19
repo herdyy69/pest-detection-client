@@ -5,6 +5,7 @@ import { InsertPlants, Plants } from "@/server/_schema/plants";
 import { asc, desc, eq, sql } from "drizzle-orm";
 import { SearchParams } from "@/server/_schema/api";
 import { ZodError } from "zod";
+import { revalidateTag } from "next/cache";
 
 type OrderByField = keyof Plants;
 
@@ -105,6 +106,8 @@ export const serviceCreatePlants = async (payload: InsertPlants) => {
     const data = InsertPlants.parse(payload);
 
     const [plant] = await db.insert(plants).values(data).returning();
+
+    revalidateTag("plants");
 
     return plant;
   } catch (error) {
