@@ -104,17 +104,12 @@ export const Camera = ({ plants }: { plants: any }) => {
       return;
     }
 
-    const prompt = `Cara penanggulangan hama alami untuk data ini: ${JSON.stringify(
-      detection
-    )}. Tolong response nya jadi tag h1-h6,p,ul,ol,li dan yang lainnya.`;
-
     try {
       await axios
         .post(process.env.NEXT_PUBLIC_BASE_URL + "/api/scan", {
           plant_id: data.plant_id,
           image_url_processed: data.image_url_processed,
           detections: detection,
-          result_ai: prompt,
           created_by: "system",
         })
         .then((res) => {
